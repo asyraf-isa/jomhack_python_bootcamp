@@ -37,3 +37,4 @@ triple_quote = """Multi-line
 string"""
 
 test update
+test change repo name
