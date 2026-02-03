@@ -1,0 +1,37 @@
+how to open terminal
+ctrl + ~
+
+how to disable code
+ctrl + /
+
+to enter folder eg py
+cd py
+
+to back folder
+cd ..
+
+install git for terminal (windows)
+https://git-scm.com/install/windows
+
+example data type
+name = "Asyraf" # string data type
+age = 31 # integer data type
+weight = 55.66 # float data type
+is_student = False # boolean data type
+
+to check data type
+print(type(name))
+print(type(is_student))
+
+example operation
+print(x + y) # addition
+print(x - y) # subtraction
+print(x * y) # multiplication
+print(x / y) # division
+print(x // y) # floor division
+print(x % y) # modulus
+print(x ** y) # exponentiation
+
+triple quote for string many line
+triple_quote = """Multi-line
+string"""
