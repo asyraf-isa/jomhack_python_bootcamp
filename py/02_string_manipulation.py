@@ -25,9 +25,10 @@ print(test_word.upper())                #UPPERCASE string
 print(test_word.lower())                #lower string
 print(test_word.title())                #only first each sentence big letter
 print(test_word.replace("2026", "C5"))  #replace specific string
+print(test_word.split())                #split into list
+print(test_word.split()[1])             #split and print selected index
 print(len(test_word.split()))           #count total word (detect by space)
 print(test_word.count("-"))             #count symbol/character in bracket
-
 
 coding = "Python"
 no_student = 35
@@ -57,6 +58,6 @@ char_nospace = len(text_example.replace(" ", ""))
 sent = text_example.count(".") + text_example.count("!") + text_example.count("?")
 
 print(f"Words count: {words}")
-print(f"Character count: {char}")
+print(f"Character count w space: {char}")
 print(f"Character count w/o space: {char_nospace}")
 print(f"Sentence count: {sent}")

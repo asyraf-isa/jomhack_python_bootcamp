@@ -10,13 +10,26 @@ cd py
 to back folder
 cd ..
 
+to break out of loop in terminal
+ctrl + c
+
 install git for terminal (windows)
 https://git-scm.com/install/windows
+
+python code referer if not clear
+https://www.w3schools.com/python/
 
 to update repo
 git add .
 git commit -m "your_comment"
 git push
+
+to create and activate virtual environment
+1.Create virtual environment : python -m venv myvenv
+2.Activate virtual environment: myvenv\Scripts\activate
+
+this to bypass policy if cannot activate
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
 example data type
 name = "Asyraf" # string data type
@@ -55,6 +68,8 @@ print(test_word.upper())                #UPPERCASE string
 print(test_word.lower())                #lower string
 print(test_word.title())                #only first each sentence big letter
 print(test_word.replace("2026", "C5"))  #replace specific string
+print(test_word.split())                #split into list
+print(test_word.split()[1])             #split and print selected index
 print(len(test_word.split()))           #count total word (detect by space)
 print(test_word.count("-"))             #count symbol/character in bracket
 
