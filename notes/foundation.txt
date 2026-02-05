@@ -31,6 +31,10 @@ to create and activate virtual environment
 this to bypass policy if cannot activate
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
+bypass forever, execute in powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+
+
 example data type
 name = "Asyraf" # string data type
 age = 31 # integer data type
@@ -54,7 +58,7 @@ triple quote for string many line
 triple_quote = """Multi-line
 string"""
 
-modulusanipulated string
+manipulated string
 select certain character in string
 print(test_word[0])      #first character
 print(test_word[-1])     #last character
