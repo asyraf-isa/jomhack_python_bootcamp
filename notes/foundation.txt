@@ -84,3 +84,5 @@ msg_1 = f"Class today: {coding}, Student: {no_student}"             #f-string me
 msg_2 = "Class today: {}, Student: {}".format(coding, no_student)   #str.format()
 msg_3 = "Class today: %s, Student: %d" % (coding, no_student)       #%-formatting %s = string, %d = decimal, %f = float, %g = general
 
+for print limit float decimal place
+{example:.3f}

@@ -1,19 +1,19 @@
-# fruits = {"apple", "banana", "orange"}
-# numbers = {1, 2, 3, 4, 5}
+fruits = {"apple", "banana", "orange"}
+numbers = {1, 2, 3, 4, 5}
 
-# # Set Operations
-# fruits.add("grape")                 # Add element
-# fruits.remove("banana")             # Remove element (error if doesnt exist)
-# fruits.discard("kiwi")              # Remove if exist (no error)
+# Set Operations
+fruits.add("grape")                 # Add element
+fruits.remove("banana")             # Remove element (error if doesnt exist)
+fruits.discard("kiwi")              # Remove if exist (no error)
 
-# print(fruits)
+print(fruits)
 
-# set1 = {1, 2, 3, 4}
-# set2 = {3, 4, 5, 6}
+set1 = {1, 2, 3, 4}
+set2 = {3, 4, 5, 6}
 
-# print(set1.union(set2))             # {1, 2, 3, 4, 5, 6}
-# print(set1.intersection(set2))      # {3, 4}
-# print(set1.difference(set2))        # {1, 2}
+print(set1.union(set2))             # {1, 2, 3, 4, 5, 6}
+print(set1.intersection(set2))      # {3, 4}
+print(set1.difference(set2))        # {1, 2}
 
 
 
