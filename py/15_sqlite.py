@@ -68,7 +68,7 @@ class DatabaseManager:
         """Get posts by user"""
         with sqlite3.connect(self.db_name) as conn:
             cursor = conn.cursor()
-            # FIX 3: Added comma to make it a tuple (user_id,)
+            # Added comma to make it a tuple (user_id,)
             cursor.execute('''
                 SELECT p.id, p.title, p.content, p.created_at
                 FROM posts p
@@ -82,11 +82,23 @@ class DatabaseManager:
         """Delete user and their posts"""
         with sqlite3.connect(self.db_name) as conn:
             cursor = conn.cursor()
-            # FIX 3: Added comma to make it a tuple (user_id,)
+            # Added comma to make it a tuple (user_id,)
             cursor.execute('DELETE FROM posts WHERE user_id = ?', (user_id,))
             cursor.execute('DELETE FROM users WHERE id = ?', (user_id,))
             return cursor.rowcount > 0
-    
+
+    # Update post (UPDATE)
+    def update_post(self, post_id, title, content):
+        """Updating existing post tile and content"""
+        with sqlite3.connect(self.db_name) as conn:
+            cursor = conn.cursor()
+            cursor.execute('''
+                UPDATE posts
+                SET title = ?,
+                    content = ?
+                WHERE id = ?
+            ''', (title, content, post_id))
+            return cursor.rowcount > 0
 
 # Create menu option
 def display_menu():
@@ -98,8 +110,9 @@ def display_menu():
     print("2. View All Users")
     print("3. Create Post")
     print("4. View User Posts")
-    print("5. Delete User")
-    print("6. Exit")
+    print("5. Edit User Post")
+    print("6. Delete User")
+    print("7. Exit")
     print("-"*40)
 
 
@@ -109,14 +122,13 @@ def main():
 
     while True:
         display_menu()
-        choice = input("Enter your choice (1-6): ").strip()
+        choice = input("Enter your choice (1-7): ").strip()
 
         if choice == '1':
             print("\n--- Create New User ---")
             name = input("Enter name: ").strip()
             email = input("Enter email: ").strip()
             try:
-                # FIX 4: Moved .strip() inside int()
                 age = int(input("Enter age: ").strip())
                 user_id = db.create_user(name, email, age)
                 if user_id:
@@ -138,7 +150,6 @@ def main():
         elif choice == '3':
             print("\n--- Create New Post ---")
             try:
-                # FIX 4: Moved .strip() inside int()
                 user_id = int(input("Enter user ID: ").strip())
                 title = input("Enter post title: ").strip()
                 content = input("Enter post content: ").strip()
@@ -153,7 +164,6 @@ def main():
         elif choice == '4':
             print("\n--- View User Posts ---")
             try:
-                # FIX 4: Moved .strip() inside int()
                 user_id = int(input("Enter user ID: ").strip())
                 posts = db.get_user_posts(user_id)
                 if posts:
@@ -169,9 +179,22 @@ def main():
                 print("Invalid user ID. Please enter a number.")
 
         elif choice == '5':
+            print("\n--- Edit User Post ---")
+            try:
+                post_id = int(input("Enter post ID: ").strip())
+                title = input("Enter new post title: ").strip()
+                content = input("Enter new post content: ").strip()
+                updatepost = db.update_post(post_id, title, content)
+                if updatepost:
+                    print(f"Post updated successfully! ID: {post_id}")
+                else:
+                    print("Failed to update post")
+            except ValueError:
+                print("Invalid post ID. Please enter a number")
+
+        elif choice == '6':
             print("\n--- Delete User ---")
             try:
-                # FIX 4: Moved .strip() inside int()
                 user_id = int(input("Enter user ID to delete: ").strip())
                 confirm = input(f"Are you sure you want to delete user {user_id}? (y/n)").strip().lower()
                 if confirm == 'y':
@@ -184,7 +207,7 @@ def main():
             except ValueError:
                 print("Invalid user ID. Please enter a number.")
 
-        elif choice == '6':
+        elif choice == '7':
             print("\nGoodbye!")
             break
 

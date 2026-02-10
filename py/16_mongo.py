@@ -21,7 +21,7 @@ class DatabaseManager:
         self.users_collection.create_index("email", unique=True)
         self.posts_collection.create_index("user_id")
 
-    # --- ALL THESE METHODS ARE NOW INSIDE THE CLASS ---
+    # --- ALL THESE FUNCTION ARE INSIDE THE CLASS ---
 
     def create_user(self, name, email, age):
         """Create a new user"""
@@ -49,7 +49,6 @@ class DatabaseManager:
                 "content": content,
                 "created_at": datetime.now()
             }
-            # Fixed: was self.post_collection, now self.posts_collection
             result = self.posts_collection.insert_one(post_doc)
             return str(result.inserted_id)
         except Exception as e:
@@ -59,7 +58,6 @@ class DatabaseManager:
     def get_all_users(self):
         """Get all users"""
         try:
-            # Fixed: was self.user_collection, now self.users_collection
             users = list(self.users_collection.find())
             for user in users:
                 user['_id'] = str(user['_id'])
@@ -96,10 +94,34 @@ class DatabaseManager:
 
             # Delete the user
             result = self.users_collection.delete_one({"_id": user_object_id})
-            # Fixed: was delete_count, now deleted_count
+    
             return result.deleted_count > 0
         except Exception as e:
             print(f"Error deleting user: {e}")
+            return False
+        
+    def update_post(self, post_id, title, content):
+        """Updating existing post tile and content"""
+        try:
+            # 1. Prepare the filter (Find the post by ID)
+            # Use ObjectId to ensure MongoDB understands the string ID
+            post_filter = {"_id": ObjectId(post_id)}
+
+            # 2. Prepare the update (Use $set to change specific fields) (Use $push to add an item to a list)
+            update_post_doc = {
+                "$set": {
+                    "title": title,
+                    "content": content,
+                }
+            }
+            # 3. Execute the update
+            result = self.posts_collection.update_one(post_filter, update_post_doc)
+
+            # Returns True if one document was found and updated
+            return result.modified_count > 0
+        
+        except Exception as e:
+            print(f"Error updating post: {e}")
             return False
         
     def close_connection(self):
@@ -117,8 +139,9 @@ def display_menu():
     print("2. View All Users")
     print("3. Create Post")
     print("4. View User Posts")
-    print("5. Delete User")
-    print("6. Exit")
+    print("5. Update User Post")
+    print("6. Delete User")
+    print("7. Exit")
     print("-"*40)
 
 def main():
@@ -132,7 +155,7 @@ def main():
 
     while True:
         display_menu()
-        choice = input("Enter your choice (1-6): ").strip()
+        choice = input("Enter your choice (1-7): ").strip()
 
         if choice == '1':
             print("\n--- Create New User ---")
@@ -184,6 +207,20 @@ def main():
                 print("No posts found for this user.")
 
         elif choice == '5':
+            print("\n--- Update User Posts ---")
+            try:
+                post_id = input("Enter post ID: ").strip()
+                title = input("Enter new post title: ").strip()
+                content = input("Enter new post content: ").strip()
+                updatepost = db.update_post(post_id, title, content)
+                if updatepost:
+                    print(f"Post updated successfully! ID: {post_id}")
+                else:
+                    print("Failed to update post")
+            except ValueError:
+                print("Invalid post ID. Please enter a valid post ID")
+
+        elif choice == '6':
             print("\n--- Delete User ---")
             user_id = input("Enter user ID to delete: ").strip()
             confirm = input(f"Are you sure you want to delete user {user_id}? (y/n)").strip().lower()
@@ -193,7 +230,7 @@ def main():
                 else:
                     print("User not found or deletion failed.")
 
-        elif choice == '6':
+        elif choice == '7':
             db.close_connection()
             print("Goodbye!")
             break
