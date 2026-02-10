@@ -209,6 +209,7 @@ def main():
         elif choice == '5':
             print("\n--- Update User Posts ---")
             try:
+                # Don't use int here bcoz Post ID is string
                 post_id = input("Enter post ID: ").strip()
                 title = input("Enter new post title: ").strip()
                 content = input("Enter new post content: ").strip()
