@@ -182,7 +182,7 @@ def main():
 
         elif choice == '3':
             print("\n--- Create New Post ---")
-            # user_id is a string in MongoDB, so we don't use int() here
+            # Don't use int here bcoz User ID is string in MongoDB
             user_id = input("Enter user ID: ").strip()
             title = input("Enter post title: ").strip()
             content = input("Enter post content: ").strip()
@@ -194,6 +194,7 @@ def main():
 
         elif choice == '4':
             print("\n--- View User Posts ---")
+            # Don't use int here bcoz User ID is string in MongoDB
             user_id = input("Enter user ID: ").strip()
             posts = db.get_user_posts(user_id)
             if posts:
@@ -209,7 +210,7 @@ def main():
         elif choice == '5':
             print("\n--- Update User Posts ---")
             try:
-                # Don't use int here bcoz Post ID is string
+                # Don't use int here bcoz Post ID is string in MongoDB
                 post_id = input("Enter post ID: ").strip()
                 title = input("Enter new post title: ").strip()
                 content = input("Enter new post content: ").strip()
@@ -223,6 +224,7 @@ def main():
 
         elif choice == '6':
             print("\n--- Delete User ---")
+            # Don't use int here bcoz User ID is string in MongoDB
             user_id = input("Enter user ID to delete: ").strip()
             confirm = input(f"Are you sure you want to delete user {user_id}? (y/n)").strip().lower()
             if confirm == 'y':
